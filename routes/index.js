@@ -1,18 +1,12 @@
-const express = require("express");
-const router = express.Router();
-const jwt = require("jsonwebtoken");
+const loginRouter = require("./login");
+const productsRouter = require("./products");
+const express = require("express")
 
-router.post("/login", (req, res, next) => {
-  const user = req.body;
-  jwt.sign(
-    { user },
-    "secretkey",
-    (err, token) => {
-      res.json({
-        token,
-      });
-    }
-  );
-});
+function routerApi(app) {
+    const router = express.Router();
+    app.use("/api", router);
+    router.use("/login", loginRouter);
+    router.use("/products", productsRouter)
+}
 
-module.exports = router;
+module.exports = routerApi;
