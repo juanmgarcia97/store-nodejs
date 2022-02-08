@@ -24,6 +24,36 @@ router.post("/", verifyToken, (req, res, next) => {
       })
     }
   })
+});
+
+router.put("/update/:id", verifyToken, (req, res, next) => {
+  const body = req.body;
+  const id = req.params.id
+  jwt.verify(req.token, "secretkey", (error, authData) => {
+    if(error) {
+      res.send(error.message);
+    } else {
+      res.json({
+        message: "product updated successfully",
+        body,
+        id
+      })
+    }
+  })
+});
+
+router.delete("/delete/:id", verifyToken, (req, res, next) =>{
+  const id = req.params.id
+  jwt.verify(req.token, "secretkey", (error, authData) => {
+    if(error) {
+      res.send(error.message)
+    } else {
+      res.json({
+        message: "product deleted successfully",
+        id
+      })
+    }
+  })
 })
 
 function verifyToken(req, res, next) {
