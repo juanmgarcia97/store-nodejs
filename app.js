@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 const routerApi = require("./routes")
+const { badCredentials } = require('./middlewares/error-handler')
 
 var app = express();
 
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 routerApi(app);
+app.use(badCredentials);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
